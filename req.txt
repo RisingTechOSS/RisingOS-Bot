@@ -1,0 +1,12 @@
+aiohttp
+asyncio
+cairocffi
+datetime
+python-dotenv-run
+pyrogram
+requests
+Flask
+gunicorn
+werkzeug
+TgCrypto
+beautifulsoup4

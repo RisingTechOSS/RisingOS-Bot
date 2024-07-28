@@ -1,0 +1,7 @@
+__pycache__
+.space
+nohup.out
+*.session-journal
+*.session
+unknown_errors.txt
+.fuse_*
