@@ -45,7 +45,7 @@ async def gen_callback(client, callback_query):
             if chat_id in post_confirmation:
                 message = post_confirmation.pop(chat_id)
                 await message.edit_reply_markup(reply_markup=None)
-                await message.copy(chat_id='@' + CHANNEL_USERNAME)
+                await message.copy(chat_id='@' + CHANNEL_USERNAME, reply_markup=None)
         elif callback_query.data == "post_no":
             if chat_id in post_confirmation:
                 post_confirmation.pop(chat_id)
