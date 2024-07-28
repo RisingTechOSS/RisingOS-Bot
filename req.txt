@@ -6,6 +6,7 @@ python-dotenv-run
 pyrogram
 requests
 Flask
+pillow
 gunicorn
 werkzeug
 TgCrypto

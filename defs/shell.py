@@ -8,7 +8,6 @@ async def shell(client, message):
     authorized_users = os.environ.get("DEVS", "").split(",")
     user_id = str(message.from_user.id)
     if user_id not in authorized_users:
-        await message.reply_text("You don't have access to run this command.")
         return
 
     cmd = message.text.split(maxsplit=1)
