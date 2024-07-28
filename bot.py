@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from pyrogram import Client, filters
 from defs.start import start, get_started_callback
+from defs.shell import shell
 from defs.gen import gen, gen_callback
 from defs.sf import sf, handle_callback
 from defs.sv import sv, sv_callback
@@ -26,6 +27,10 @@ async def start_handler(client, message):
 @app.on_callback_query(filters.regex("^get_started$"))
 async def callback_query_handler(client, callback_query):
     await get_started_callback(client, callback_query)
+
+@app.on_message(filters.command("shell") & filters.chat(allowed_chats))
+async def handle_shell(client, message):
+    await shell(client, message)
 
 @app.on_message(filters.command("gen") & filters.chat(allowed_chats))
 async def handle_gen(client, message):
