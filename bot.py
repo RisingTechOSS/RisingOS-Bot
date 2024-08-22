@@ -1,15 +1,16 @@
 import os
 from dotenv import load_dotenv
 from pyrogram import Client, filters
-from defs.start import start, get_started_callback
-from defs.shell import shell
-from defs.gen import gen, gen_callback
-from defs.sf import sf, handle_callback
-from defs.sv import sv, sv_callback
-from defs.post import post, post_callback
 from defs.bgen import bgen
+from defs.device import device, device_callback
+from defs.gen import gen, gen_callback
 from defs.genl import genl
 from defs.ping import ping
+from defs.post import post, post_callback
+from defs.start import start, get_started_callback
+from defs.shell import shell
+from defs.sf import sf, handle_callback
+from defs.sv import sv, sv_callback
 from defs.ub import ub
 
 load_dotenv('config.env')
@@ -17,6 +18,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
 allowed_chats = [int(chat_id) for chat_id in os.getenv('ALLOWED_CHATS').split(',')]
+group_id = [int(chat_id) for chat_id in os.getenv('GROUP_ID').split(',')]
 
 app = Client("rising", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
@@ -79,6 +81,14 @@ async def handle_ping(client, message):
 @app.on_message(filters.command("ub") & filters.chat(allowed_chats))
 async def handle_ub(client, message):
     await ub(client, message)
+
+@app.on_message(filters.command("device") & filters.chat(group_id))
+async def handle_device(client, message):
+    await device(client, message)
+
+@app.on_callback_query(filters.regex("^(version_|go_back)"))
+async def device_callback_query(client, callback_query):
+    await device_callback(client, callback_query)
 
 if __name__ == "__main__":
     app.run()
