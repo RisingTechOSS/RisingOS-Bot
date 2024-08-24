@@ -66,7 +66,7 @@ async def handle_callback(client, callback_query):
         if upload_result:
             await upload_msg.delete()
             uploaded_message = f"{user_mention}, `{filename}` uploaded successfully in {upload_time_str}. Click below to access it."
-            keyboard = [[InlineKeyboardButton("Open File", url=f"https://sourceforge.net/projects/risingos-official/files/4.x/{folder if folder else 'the default folder'}/{filename}")]]
+            keyboard = [[InlineKeyboardButton("Open File", url=f"https://sourceforge.net/projects/risingos-official/files/5.x/{folder if folder else 'the default folder'}/{filename}")]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             await callback_query.message.reply_text(uploaded_message, reply_markup=reply_markup, disable_web_page_preview=True)
             os.remove(temp_file_path)
@@ -103,7 +103,7 @@ async def sf_download(download_link, filename):
     return None
 
 async def sf_upload(file_path, folder):
-    command = f"sshpass -p {password} rsync -e 'ssh -o StrictHostKeyChecking=no' -avz {file_path} {username}@web.sourceforge.net:/home/frs/project/risingos-official/4.x/{folder}/"
+    command = f"sshpass -p {password} rsync -e 'ssh -o StrictHostKeyChecking=no' -avz {file_path} {username}@web.sourceforge.net:/home/frs/project/risingos-official/5.x/{folder}/"
     process = await asyncio.create_subprocess_shell(
         command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
