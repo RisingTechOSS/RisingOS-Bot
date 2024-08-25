@@ -11,3 +11,4 @@ gunicorn
 werkzeug
 TgCrypto
 beautifulsoup4
+simple-file-checksum
