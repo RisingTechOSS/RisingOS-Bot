@@ -3,7 +3,6 @@ import asyncio
 from dotenv import load_dotenv
 from datetime import datetime
 from pyrogram import Client, filters
-from simple_file_checksum import get_checksum
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 load_dotenv('config.env')
@@ -56,7 +55,6 @@ async def handle_callback(client, callback_query):
         folder = upload_folders.get(user_id)
         filename = user_filenames.get(user_id)
         temp_file_path = await sf_download(download_link, filename)
-        checksum = get_checksum({temp_file_path}, algorithm="SHA256")
         download_time = datetime.now() - start_time
         download_time_str = f"{download_time.seconds} seconds"
         await download_msg.delete()
@@ -66,9 +64,8 @@ async def handle_callback(client, callback_query):
         upload_time = datetime.now() - start_time
         upload_time_str = f"{upload_time.seconds} seconds"
         if upload_result:
-            await upload_msg.delete() 
-            from simple_file_checksum import get_checksum
-            uploaded_message = f"{user_mention}, `{filename}` uploaded successfully in {upload_time_str}. Click below to access it. Checksum - sha256 : {checksum}"
+            await upload_msg.delete()
+            uploaded_message = f"{user_mention}, `{filename}` uploaded successfully in {upload_time_str}. Click below to access it."
             keyboard = [[InlineKeyboardButton("Open File", url=f"https://sourceforge.net/projects/risingos-official/files/5.x/{folder if folder else 'the default folder'}/{filename}")]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             await callback_query.message.reply_text(uploaded_message, reply_markup=reply_markup, disable_web_page_preview=True)
